@@ -66,8 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="r-npCCgT6pZhlQr2mDkWcTiFxiVEJs-Hk1HSH-6A7Ac" />
-    <title>Shorter Site JE - Premium URL Shortener</title>
+    <title>Shorter Site JE - Free & Ad-Free URL Shortener</title>
     <!-- Bootstrap 5 CSS & FontAwesome Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -164,7 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background-color: #0b0f19;
         }
     </style>
-    
 </head>
 <body>
 
@@ -181,6 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul class="navbar-nav ms-auto align-items-center gap-2 mt-3 mt-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#fitur">Fitur</a></li>
                 <li class="nav-item"><a class="nav-link" href="#cara-kerja">Cara Kerja</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://ilhambahri.rf.gd">Pengembang</a></li>
                 <?php if(isset($_SESSION['user_id'])): ?>
                     <li class="nav-item"><a href="dashboard.php" class="btn btn-info btn-sm px-3 fw-semibold">Dashboard</a></li>
                     <li class="nav-item"><a href="logout.php" class="btn btn-outline-light btn-sm px-3">Logout</a></li>
@@ -196,12 +195,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Hero Section & Shortener Form -->
 <section class="hero-section">
     <div class="container text-center">
-        <span class="badge bg-indigo bg-opacity-20 text-info px-3 py-2 rounded-pill mb-3 border border-info border-opacity-25">
-            <i class="fa-solid fa-bolt me-1"></i> Platform URL Shortener Cepat & Modern
-        </span>
-        <h1 class="hero-title mb-3">Persingkat Tautan Panjangmu<br>Dalam Hitungan Detik</h1>
+        
+        <!-- Trust Badges -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+            <span class="badge bg-danger bg-opacity-20 text-danger px-3 py-2 rounded-pill border border-danger border-opacity-25 fw-semibold">
+                <i class="fa-solid fa-ban me-1"></i> 100% Tanpa Iklan
+            </span>
+            <span class="badge bg-success bg-opacity-20 text-success px-3 py-2 rounded-pill border border-success border-opacity-25 fw-semibold">
+                <i class="fa-solid fa-gift me-1"></i> Gratis Selamanya
+            </span>
+            <span class="badge bg-info bg-opacity-20 text-info px-3 py-2 rounded-pill border border-info border-opacity-25 fw-semibold">
+                <i class="fa-solid fa-infinity me-1"></i> Akses Tak Terbatas
+            </span>
+        </div>
+
+        <h1 class="hero-title mb-3">Persingkat Tautan Panjangmu<br>Tanpa Gangguan Iklan</h1>
         <p class="text-secondary fs-5 mx-auto mb-4" style="max-width: 650px;">
-            Shorter Site JE membantu mempermudah pembagian link, melacak statistik klik, dan mempercantik tautan bisnis atau portofoliomu.
+            Layanan penyingkat URL serba cepat, bersih, dan gratis. Pengunjung langsung diarahkan ke tujuan tanpa perlu melewati halaman jeda atau pop-up iklan.
         </p>
 
         <!-- Form Box -->
@@ -224,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </button>
                         </div>
                         <span class="text-muted style-small" style="font-size: 0.8rem;">
-                            <i class="fa-solid fa-circle-info text-info me-1"></i> Mode Tamu: Link aktif tanpa login (Nonaktif jika tidak diakses >3 hari).
+                            <i class="fa-solid fa-circle-info text-info me-1"></i> Mode Tamu: Link aktif instan (Nonaktif jika tidak diakses >3 hari).
                         </span>
                     </form>
 
@@ -253,29 +263,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <div class="text-center mb-5">
             <h2 class="fw-bold">Kenapa Memilih Shorter Site JE?</h2>
-            <p class="text-secondary">Solusi serba ada untuk kebutuhan pengelolaan tautanmu</p>
+            <p class="text-secondary">Solusi penyingkat URL modern, aman, dan nyaman digunakan</p>
         </div>
 
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="feature-card h-100">
-                    <div class="feature-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
-                    <h5 class="fw-bold">Serba Cepat & Tanpa Ribet</h5>
-                    <p class="text-secondary small mb-0">Persingkat tautan secara instan langsung dari halaman depan tanpa wajib login terlebih dahulu.</p>
+                    <div class="feature-icon"><i class="fa-solid fa-rectangle-ad text-danger"></i></div>
+                    <h5 class="fw-bold">100% Tanpa Iklan (No Ads)</h5>
+                    <p class="text-secondary small mb-0">Bebas dari pop-up banner, captcha rumit, atau *interstitial ads*. Pengunjung dikirim langsung ke tautan tujuan secara instan.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="fa-solid fa-hand-holding-dollar text-success"></i></div>
+                    <h5 class="fw-bold">Gratis Selamanya</h5>
+                    <p class="text-secondary small mb-0">Semua fitur utama disediakan 100% gratis tanpa biaya tersembunyi, sistem langganan, atau trial terbatas.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="fa-solid fa-infinity text-warning"></i></div>
+                    <h5 class="fw-bold">Penggunaan Tak Terbatas</h5>
+                    <p class="text-secondary small mb-0">Buat tautan pendek sebanyak yang kamu butuhkan tanpa batasan kuota harian maupun bulanan.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card h-100">
                     <div class="feature-icon"><i class="fa-solid fa-pen-to-square"></i></div>
                     <h5 class="fw-bold">Custom Alias Tautan</h5>
-                    <p class="text-secondary small mb-0">Pengguna terdaftar dapat memilih kata kunci unik sesuai brand (contoh: <code>shorter.site.je/promo-2026</code>).</p>
+                    <p class="text-secondary small mb-0">Pengguna terdaftar dapat menentukan nama alias unik sesuai kebutuhan personal atau brand bisnis.</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="feature-card h-100">
                     <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
-                    <h5 class="fw-bold">Statistik & Pantauan Klik</h5>
-                    <p class="text-secondary small mb-0">Pantau jumlah total pengunjung dan performa setiap link kamu melalui dashboard interaktif.</p>
+                    <h5 class="fw-bold">Statistik Real-Time</h5>
+                    <p class="text-secondary small mb-0">Pantau jumlah total pengunjung dan performa setiap link kamu dengan akurat melalui Dashboard.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card h-100">
+                    <div class="feature-icon"><i class="fa-solid fa-shield-halved text-info"></i></div>
+                    <h5 class="fw-bold">Aman & Terjaga</h5>
+                    <p class="text-secondary small mb-0">Sistem terlindungi dari link berbahaya, phishing, dan dilengkapi pembersihan otomatis untuk link tamu pasif.</p>
                 </div>
             </div>
         </div>
@@ -290,17 +321,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-md-4">
                 <div class="step-number">1</div>
                 <h5 class="fw-bold">Tempelkan Link</h5>
-                <p class="text-secondary small">Masukkan URL panjang yang ingin kamu persingkat pada kolom yang telah disediakan.</p>
+                <p class="text-secondary small">Masukkan URL panjang yang ingin kamu persingkat pada kolom utama.</p>
             </div>
             <div class="col-md-4">
                 <div class="step-number">2</div>
                 <h5 class="fw-bold">Klik Persingkat</h5>
-                <p class="text-secondary small">Sistem kami akan memproses dan menggenerasi tautan pendek unik secara otomatis.</p>
+                <p class="text-secondary small">Sistem akan secara instan membuatkan tautan pendek yang bersih & rapi.</p>
             </div>
             <div class="col-md-4">
                 <div class="step-number">3</div>
                 <h5 class="fw-bold">Bagikan & Pantau</h5>
-                <p class="text-secondary small">Salin hasil tautan pendek dan bagikan ke sosial media, kawan, atau klien bisnis kamu.</p>
+                <p class="text-secondary small">Salin link pendekmu dan bagikan tanpa khawatir terganggu oleh iklan!</p>
             </div>
         </div>
     </div>
@@ -312,7 +343,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="cta-banner text-center text-white">
             <h2 class="fw-extrabold mb-3">Dapatkan Tautan Permanen Tanpa Batas</h2>
             <p class="fs-6 opacity-90 mx-auto mb-4" style="max-width: 600px;">
-                Daftar akun gratis sekarang untuk menikmati link permanen (tanpa terhapus otomatis), custom alias pilihanmu, serta manajemen dashboard lengkap.
+                Daftar akun gratis sekarang untuk menikmati tautan yang aktif selamanya (tanpa terhapus otomatis), fitur custom alias, dan manajemen dashboard penuh.
             </p>
             <a href="register.php" class="btn btn-dark btn-lg px-5 fw-bold rounded-pill">Daftar Akun Gratis</a>
         </div>
