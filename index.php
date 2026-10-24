@@ -354,14 +354,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <footer class="py-4 mt-5">
     <div class="container text-center text-secondary small">
         <div class="mb-2">
-            <a href="index.php" class="text-light text-decoration-none me-3">Beranda</a>
             <a href="login.php" class="text-light text-decoration-none me-3">Login</a>
             <a href="register.php" class="text-light text-decoration-none">Daftar</a>
+            <a href="#" class="text-light text-decoration-none me-3" data-bs-toggle="modal" data-bs-target="#tncModal">Syarat & Ketentuan</a>
+            <a href="login.php" class="text-light text-decoration-none me-3">Pengembang</a>
         </div>
         <p class="mb-0">&copy; 2026 Ilham Bahri Albi. All Rights Reserved.</p>
     </div>
 </footer>
-
+<!-- Modal Syarat & Ketentuan -->
+<div class="modal fade" id="tncModal" tabindex="-1" aria-labelledby="tncModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark text-white border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title fw-bold" id="tncModalLabel">
+                    <i class="fa-solid fa-file-contract text-info me-2"></i>Syarat & Ketentuan
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-secondary small style-text">
+                <div class="mb-3">
+                    <h6 class="text-light fw-bold mb-1">1. Larangan Konten</h6>
+                    <p class="mb-0">Dilarang keras memersingkat tautan yang mengarah pada situs <em>phishing</em>, penipuan, judi <em>online</em>, <em>malware</em>, atau konten ilegal lainnya.</p>
+                </div>
+                <div class="mb-3">
+                    <h6 class="text-light fw-bold mb-1">2. Ketentuan Link Tamu</h6>
+                    <p class="mb-0">Tautan yang dibuat tanpa login bersifat sementara dan otomatis dihapus sistem jika tidak diakses selama 3 hari berturut-turut.</p>
+                </div>
+                <div class="mb-3">
+                    <h6 class="text-light fw-bold mb-1">3. Hak Pembatasan</h6>
+                    <p class="mb-0">Pengelola berhak memblokir atau menghapus tautan apa pun yang dilaporkan melanggar aturan tanpa pemberitahuan terlebih dahulu.</p>
+                </div>
+                <div>
+                    <h6 class="text-light fw-bold mb-1">4. Penolakan Tanggung Jawab</h6>
+                    <p class="mb-0">Shorter Site JE tidak bertanggung jawab atas isi konten pada situs pihak ketiga yang dituju oleh tautan pengguna.</p>
+                </div>
+            </div>
+            <div class="modal-footer border-secondary py-2">
+                <button type="button" class="btn btn-info btn-sm fw-bold px-3" data-bs-dismiss="modal">Saya Paham</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 function copyLink(btn) {
