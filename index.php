@@ -10,20 +10,78 @@ if (isset($_GET['code'])) {
     $url = $stmt->fetch();
 
     if ($url) {
-        // CEK LAZY CLEANUP: Jika Guest (user_id NULL)
+        // 1. CEK SAKELAR STATUS LINK
+        if ($url['status'] == 0) {
+            echo '<!DOCTYPE html><html lang="id"><head><title>Link Nonaktif</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+            <body class="bg-dark text-white d-flex align-items-center min-vh-100 text-center"><div class="container" style="max-width:450px;">
+            <div class="card bg-secondary p-4 shadow"><div class="display-3 text-warning mb-2">🚫</div><h4>Link Sedang Nonaktif</h4><p class="text-light small">Pemilik tautan telah menonaktifkan akses ke link ini untuk sementara waktu.</p>
+            <a href="index.php" class="btn btn-outline-light btn-sm">Kembali ke Beranda</a></div></div></body></html>';
+            exit;
+        }
+
+        // 2. CEK LAZY CLEANUP (Khusus Guest)
         if (is_null($url['user_id'])) {
             $lastAccess = strtotime($url['last_accessed_at'] ?? $url['created_at']);
             $diffDays = (time() - $lastAccess) / (60 * 60 * 24);
 
-            // Jika > 3 Hari tidak diakses -> Hapus & Arahkan ke Expired
             if ($diffDays >= 3) {
                 $delStmt = $pdo->prepare("DELETE FROM urls WHERE id = ?");
                 $delStmt->execute([$url['id']]);
-
                 header("Location: expired.php");
                 exit;
             }
         }
+
+        // 3. CEK PROTEKSI PASSWORD
+        if (!empty($url['password'])) {
+            $pass_error = '';
+            
+            // Cek jika pengakses mengirimkan password
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['link_pass_input'])) {
+                $input_pass = $_POST['link_pass_input'];
+                
+                if (password_verify($input_pass, $url['password'])) {
+                    // Password benar! Lanjut redirect
+                    $updStmt = $pdo->prepare("UPDATE urls SET clicks = clicks + 1, last_accessed_at = NOW() WHERE id = ?");
+                    $updStmt->execute([$url['id']]);
+                    header("Location: " . $url['original_url']);
+                    exit;
+                } else {
+                    $pass_error = 'Password salah! Silakan coba lagi.';
+                }
+            }
+
+            // Tampilkan Halaman Input Password (Gate)
+            echo '<!DOCTYPE html><html lang="id"><head><title>Tautan Diproteksi</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"></head>
+            <body class="bg-dark text-white d-flex align-items-center min-vh-100 text-center"><div class="container" style="max-width:400px;">
+            <div class="card bg-secondary p-4 shadow">
+            <div class="display-4 text-info mb-2">🔒</div>
+            <h4 class="fw-bold">Tautan Diproteksi</h4>
+            <p class="text-light small">Masukkan kata sandi untuk mengakses URL ini.</p>';
+            
+            if($pass_error) {
+                echo '<div class="alert alert-danger py-2 small">'.$pass_error.'</div>';
+            }
+            
+            echo '<form method="POST">
+                <input type="password" name="link_pass_input" class="form-control mb-3 text-center" placeholder="Masukkan Password" required>
+                <button type="submit" class="btn btn-info w-100 fw-bold">Buka Link</button>
+            </form>
+            </div></div></body></html>';
+            exit;
+        }
+
+        // 4. JIKA TANPA PASSWORD & AKTIF: Update Klik & Redirect
+        $updStmt = $pdo->prepare("UPDATE urls SET clicks = clicks + 1, last_accessed_at = NOW() WHERE id = ?");
+        $updStmt->execute([$url['id']]);
+
+        header("Location: " . $url['original_url']);
+        exit;
+    } else {
+        echo "<h3>404 - Link tidak ditemukan!</h3>";
+        exit;
+    }
+}
 
         // BILA MASIH VALID: Update Klik & Tanggal Akses Terakhir
         $updStmt = $pdo->prepare("UPDATE urls SET clicks = clicks + 1, last_accessed_at = NOW() WHERE id = ?");
