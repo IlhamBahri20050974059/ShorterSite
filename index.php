@@ -97,6 +97,7 @@ if (isset($_GET['code'])) {
 }
 
 // --- PEMBUATAN LINK GUEST ---
+// --- PEMBUATAN LINK GUEST ---
 $short_result = "";
 $error = "";
 
@@ -107,15 +108,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $original_url = "https://" . $original_url;
     }
 
-    // Buat Kode Acak 6 Karakter
-    $code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
+    // 🛡️ [LETAK PENGECEKAN] Cek keamanan link sebelum simpan
+    if (!isUrlSafeGoogle($original_url)) {
+        $error = "Tautan ditolak! URL ini terindikasi berbahaya (Phishing/Malware) oleh Google Safe Browsing.";
+    } else {
+        // Buat Kode Acak 6 Karakter
+        $code = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO urls (user_id, original_url, short_code) VALUES (NULL, ?, ?)");
-        $stmt->execute([$original_url, $code]);
-        $short_result = BASE_URL . "/" . $code;
-    } catch (PDOException $e) {
-        $error = "Gagal membuat link. Coba lagi!";
+        try {
+            $stmt = $pdo->prepare("INSERT INTO urls (user_id, original_url, short_code) VALUES (NULL, ?, ?)");
+            $stmt->execute([$original_url, $code]);
+            $short_result = BASE_URL . "/" . $code;
+        } catch (PDOException $e) {
+            $error = "Gagal membuat link. Coba lagi!";
+        }
     }
 }
 ?>
