@@ -19,17 +19,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $original_url = "https://" . $original_url;
     }
 
-    $code = !empty($custom_code) ? $custom_code : substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
-    
-    // Hash password jika diisi, jika kosong set NULL
-    $pass_hash = !empty($link_pass) ? password_hash($link_pass, PASSWORD_DEFAULT) : null;
+    // 🛡️ [LETAK PENGECEKAN] Cek keamanan link sebelum simpan
+    if (!isUrlSafeGoogle($original_url)) {
+        $error = "Tautan ditolak! URL ini terindikasi berbahaya (Phishing/Malware) oleh Google Safe Browsing.";
+    } else {
+        $code = !empty($custom_code) ? $custom_code : substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 6);
+        $pass_hash = !empty($link_pass) ? password_hash($link_pass, PASSWORD_DEFAULT) : null;
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO urls (user_id, original_url, short_code, password, status) VALUES (?, ?, ?, ?, 1)");
-        $stmt->execute([$user_id, $original_url, $code, $pass_hash]);
-        $success = "Link berhasil dibuat: " . BASE_URL . "/" . $code;
-    } catch (PDOException $e) {
-        $error = "Custom Alias sudah digunakan! Pilih kata lain.";
+        try {
+            $stmt = $pdo->prepare("INSERT INTO urls (user_id, original_url, short_code, password, status) VALUES (?, ?, ?, ?, 1)");
+            $stmt->execute([$user_id, $original_url, $code, $pass_hash]);
+            $success = "Tautan berhasil dibuat: " . BASE_URL . "/" . $code;
+        } catch (PDOException $e) {
+            $error = "Custom Alias sudah digunakan! Silakan pilih kata lain.";
+        }
     }
 }
 
