@@ -91,7 +91,7 @@ if (isset($_GET['code'])) {
         header("Location: " . $url['original_url']);
         exit;
     } else {
-        echo "<h3>404 - Link tidak ditemukan!</h3>";
+        header("Location: notfound.php");
         exit;
     }
 }
